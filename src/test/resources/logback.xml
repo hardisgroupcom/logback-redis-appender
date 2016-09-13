@@ -1,0 +1,29 @@
+<configuration>
+  <appender name="TEST" class="com.hardis.logback.FailoverRedisAppender">
+    <source>test-application</source>   
+    <endpoints>vmlnxdocker.hardis.fr:6379,vmlnxdocker.hardis.fr:6565</endpoints>
+    <!-- <host>vmlnxdocker.hardis.fr</host>
+    <port>6565</port> -->
+    <key>key1</key>
+	<layout class="net.logstash.logback.layout.LogstashLayout"></layout>    
+    <alwaysBatch>true</alwaysBatch>
+  	<registerMBean>false</registerMBean>  
+  	<queueSize>5000</queueSize>
+  	<flushInterval>500</flushInterval>
+  	<batchSize>100</batchSize>
+  </appender>
+  
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%logger{15} - %message%n%xException{5}</pattern>
+    </encoder>
+  </appender>
+                  
+  <logger name="application" level="DEBUG" />
+
+  <root level="DEBUG">
+    <appender-ref ref="STDOUT" />
+    <appender-ref ref="TEST" />
+  </root>
+
+</configuration>

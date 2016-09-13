@@ -1,0 +1,12 @@
+.DS_Store
+.classpath
+.idea/
+.project
+.settings/
+redis-appender.iml
+target/
+*.jar
+deploy.sh
+build-rpm.sh
+*.rpm
+/bin/
