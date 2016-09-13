@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.hardis.logback</groupId>
-    <artifactId>logback-redis-appender-hardis</artifactId>
+    <artifactId>logback-redis-appender</artifactId>
     <version>1.0.0</version>
     <name>Log4j Redis Appender</name>
 
