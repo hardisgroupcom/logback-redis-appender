@@ -1,54 +1,30 @@
-# logback-redis-appender
+# logback-redis-appender Hardis
 
-Ce projet part d'un clone de https://github.com/bolcom/log4j-redis-appender qui a été ensuite adapté pour fonctionner avec logback. 
+This project is a clone of https://github.com/hardisgroupcom/log4j-redis-appender which was subsequently adapted to operate with logback. 
 
-Des mini ajustement ont été fait pour en faire un projet Hardis:
-* Nom des packages
-* Supression du fichier de licence
-* Modification du pom.xml pour le plus inclure les jar dépendants dans le jar de ce projet
-
-Ensuite pour en faire un projet logback les modifications sont les suivantes:
-* Dépendance vers ch.qos.logback.logback-classic
-* Le RedisAppender étend UnsynchronizedAppenderBase et implémente les méthode abstraite start, stop et append
-* Ajout de la variable layout pour permettre dans le paramétrage de choisir un layout autre que celui par défaut dans ce projet 
-* La documentation a été réécrite
-
-
-# logback-redis-appender
-
-logback appender for pushing logback events to a Redis list, for easy integration with Logstash.
-
-It also protects the JVM against OOM's from too many buffered events. And it exposes metrics about its throughput and data loss.
-
-The code is based from [@ryantenney's work](https://github.com/ryantenney/log4j-redis-appender), which in turn was derived from [@pavlobaron's log4j2redis](https://github.com/pavlobaron/log4j2redis) work.
-
-The main differences compared to Ryan's great work:
-
-* it drops events to protect the JVM against OOM's
-* it detects Redis OOM's
-* it keeps metrics (about throughput + drops),
-
-This appender works great with [log4j-jsonevent-layout](https://github.com/bolcom/log4j-jsonevent-layout) to transform all events into JSON documents, for easy processing by Logstash.
-
+The changes are: 
+* add dependency to ch.qos.logback.logback-classic
+* RedisAppender extend UnsynchronizedAppenderBase and implement the abstract method start, stop et append
+* Add of the layout feature for logback 
+* Change of the documentation
 
 ## Configuration
 
-This appender pushes log4j events to a Redis list. Here is an example XML configuration:
+This appender pushes logback events to a Redis list. Here is an example XML configuration:
 
 ```
-   <appender name="JSON_REDIS" class="com.bol.log4j.FailoverRedisAppender">
-      <param name="endpoints" value="server1:6379,server2:6379" />
-      <param name="alwaysBatch" value="false" />
-      <param name="batchSize" value="50" />
-      <param name="flushInterval" value="1000" />
-      <param name="queueSize" value="5000" />
-      <param name="registerMBean" value="true" />
-      <param name="key" value="logstash.log4j" />
-      <param name="Threshold" value="DEBUG"/>
-      <layout class="net.logstash.log4j.JSONEventLayout">
-         <param name="userfields" value="application:xyz,role:xyz-app"/>
-      </layout>
-   </appender>
+  <appender name="TEST" class="com.hardis.logback.FailoverRedisAppender">    
+    <endpoints>vm1.hardis.fr:6379,vm2.hardis.fr:6565</endpoints>
+    <!-- <host>vmlnxdocker.hardis.fr</host>
+    <port>6565</port> -->
+    <key>key1</key>
+    <layout class="net.logstash.logback.layout.LogstashLayout"></layout>    
+    <alwaysBatch>true</alwaysBatch>
+    <registerMBean>false</registerMBean>  
+    <queueSize>5000</queueSize>
+    <flushInterval>500</flushInterval>
+    <batchSize>100</batchSize>
+  </appender>
 ```
    
 Where:
@@ -102,3 +78,13 @@ Jcollectd XML config for this appender:
   </mbeans>
 </jcollectd-config>
 ```
+
+# Contribution
+
+Feel free to create an issue or submit a pull request.
+
+
+# License
+
+Published under Apache Software License 2.0, see LICENSE
+

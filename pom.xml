@@ -4,32 +4,28 @@
 
     <groupId>com.hardis.logback</groupId>
     <artifactId>logback-redis-appender</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <name>Log4j Redis Appender</name>
 
-	<scm>
-		<url>https://github.com/kevinsawicki/github-maven-example</url>
-		<connection>scm:https://pid.hardis.fr/git/r/LogbackRedisAppender.git</connection>
-		<developerConnection>scm:https://cleroy@pid.hardis.fr/git/r/LogbackRedisAppender.git </developerConnection>
-	</scm>
-	<distributionManagement>
-		<repository>
-			<id>nexus</id>
-			<name>hardis-release</name>
-			<url>https://pid.hardis.fr/nexus/content/repositories/hardis-release/</url>
-		</repository>
-		<snapshotRepository>
-			<id>nexus</id>
-			<name>hardis-snapshot</name>
-			<url>https://pid.hardis.fr/nexus/content/repositories/hardis-snapshot/</url>
-		</snapshotRepository>
-	</distributionManagement>	
- 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<jedis.version>2.1.0</jedis.version>
     </properties>
+    
+    <licenses>
+        <license>
+            <name>Apache License 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+	    <distribution>repo</distribution>
+        </license>
+    </licenses>
+    
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>        
 
     <dependencies>
         <dependency>
@@ -105,9 +101,21 @@
                 </executions>
             </plugin>
             <plugin>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.2.1</version>
+                <configuration>
+                    <allowTimestampedSnapshots>true</allowTimestampedSnapshots>
+                    <!-- Make signing prompt for passphrase properly http://jira.codehaus.org/browse/MGPG-9 -->
+                    <mavenExecutorId>forked-path</mavenExecutorId>
+                    <tagNameFormat>v@{project.version}</tagNameFormat>
+                    <preparationGoals>clean test</preparationGoals>
+                    <stagingRepository>sonatype-nexus-staging::default::https://oss.sonatype.org/service/local/staging/deploy/maven2</stagingRepository>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>findbugs-maven-plugin</artifactId>
-                <version>3.0.1</version>
+                <version>3.0.4</version>
                 <configuration>
                     <effort>Max</effort>
                     <threshold>Default</threshold>
@@ -121,6 +129,34 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.0</version>
+                <configuration>
+                    <reportPlugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-project-info-reports-plugin</artifactId>
+                            <version>2.4</version>
+                            <configuration>
+                                <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+                                <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
+                            </configuration>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-javadoc-plugin</artifactId>
+                            <version>2.8.1</version>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>findbugs-maven-plugin</artifactId>
+                            <version>2.4.0</version>
+                        </plugin>
+                    </reportPlugins>
+                </configuration>
+            </plugin>            
         </plugins>
     </build>
 

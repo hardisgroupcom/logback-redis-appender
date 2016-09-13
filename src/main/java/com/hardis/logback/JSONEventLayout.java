@@ -22,8 +22,8 @@ import java.util.regex.Pattern;
  */
 public class JSONEventLayout extends LayoutBase<ILoggingEvent> {
 
-	private final int DEFAULT_SIZE = 256;
-	private final int UPPER_LIMIT = 2048;
+	private final static int DEFAULT_SIZE = 256;
+	private final static int UPPER_LIMIT = 2048;
 	private final static char DBL_QUOTE = '"';
 	private final static char COMMA = ',';
 
