@@ -2,12 +2,6 @@
 
 This project is a clone of https://github.com/hardisgroupcom/log4j-redis-appender which was subsequently adapted to operate with logback. 
 
-The changes are: 
-* add dependency to ch.qos.logback.logback-classic
-* RedisAppender extend UnsynchronizedAppenderBase and implement the abstract method start, stop et append
-* Add of the layout feature for logback 
-* Change of the documentation
-
 ## Configuration
 
 This appender pushes logback events to a Redis list. Here is an example XML configuration:
