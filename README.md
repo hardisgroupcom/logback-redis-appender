@@ -37,7 +37,7 @@ Where:
 
 ## Metrics
 
-When the appender's MBean is registered (see `registerMBean` configuration) the following metrics are available under MBean "com.bol.log4j:type=FailoverRedisAppender":
+When the appender's MBean is registered (see `registerMBean` configuration) the following metrics are available under MBean "com.hardis.logback:type=FailoverRedisAppender":
 
 * **eventCounter**: (counter) number of events received by the appender and put in the queue. Configuration `queueSize` controls the the maximum number of events this queue can hold.
 * **eventsDroppedInQueueing**: (counter) number of events that got dropped, because the queue was full. You get a full queue if Redis is full or your application is emitting events faster than can be pushed to Redis. You can increase `queueSize` or rise the log4j threshold to ignore events based on their level (DEBUG can be noisy).
@@ -52,14 +52,14 @@ When the appender's MBean is registered (see `registerMBean` configuration) the 
 
 ## JCollectd configuration
 
-Use [Jcollectd](https://github.com/bolcom/jcollectd) in your JVM to periodically flush MBean metrics to [collectd](https://github.com/collectd/collectd) or [Diamond](https://github.com/BrightcoveOS/Diamond)'s [JCollectdCollector](https://github.com/BrightcoveOS/Diamond/wiki/collectors-JCollectdCollector).
+Use [Jcollectd](https://github.com/hardisgroupcom/jcollectd) in your JVM to periodically flush MBean metrics to [collectd](https://github.com/collectd/collectd) or [Diamond](https://github.com/BrightcoveOS/Diamond)'s [JCollectdCollector](https://github.com/BrightcoveOS/Diamond/wiki/collectors-JCollectdCollector).
 
 Jcollectd XML config for this appender:
 
 ```
 <jcollectd-config>
   <mbeans name="log4j">
-    <mbean name="com.bol.log4j:type=FailoverRedisAppender" alias="RedisAppender">
+    <mbean name="com.hardis.logback:type=FailoverRedisAppender" alias="RedisAppender">
       <attribute name="ConnectCounter" type="counter"/>
       <attribute name="ConnectFailures" type="counter"/>
       <attribute name="EventCounter" type="counter"/>
