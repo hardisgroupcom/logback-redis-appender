@@ -1,8 +1,8 @@
 <configuration>
   <appender name="TEST" class="com.hardis.logback.FailoverRedisAppender">
     <source>test-application</source>   
-    <endpoints>vmlnxdocker.hardis.fr:6379,vmlnxdocker.hardis.fr:6565</endpoints>
-    <!-- <host>vmlnxdocker.hardis.fr</host>
+    <endpoints>localhost:6379,localhost:6565</endpoints>
+    <!-- <host>localhost</host>
     <port>6565</port> -->
     <key>key1</key>
 	<layout class="net.logstash.logback.layout.LogstashLayout"></layout>    
