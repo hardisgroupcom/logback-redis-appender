@@ -4,7 +4,7 @@
 
     <groupId>com.hardis.logback</groupId>
     <artifactId>logback-redis-appender</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.2</version>
     <name>Logback Redis Appender</name>
 	<description>Logback appender for sending Logback events to a Redis server</description>
 	<url>https://github.com/hardisgroupcom/logback-redis-appender</url>    
