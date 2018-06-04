@@ -55,7 +55,10 @@ public class RedisAppender extends UnsynchronizedAppenderBase<ILoggingEvent> imp
     private int batchSize = 100;
     private long flushInterval = 500;
     private boolean alwaysBatch = true;
-    private boolean purgeOnFailure = true;
+    private boolean useSSL = false;
+
+
+	private boolean purgeOnFailure = true;
     private long waitTerminate = 1000;
     private boolean registerMBean = true;
 
@@ -173,7 +176,7 @@ public class RedisAppender extends UnsynchronizedAppenderBase<ILoggingEvent> imp
         if (jedis != null && jedis.isConnected()) {
             jedis.disconnect();
         }
-        jedis = new Jedis(host, port);
+        jedis = new Jedis(host, port,useSSL);
     }
 
 
@@ -346,6 +349,9 @@ public class RedisAppender extends UnsynchronizedAppenderBase<ILoggingEvent> imp
 		this.layout = layout;
 	}    
 
+	public void setUseSSL(boolean useSSL) {
+		this.useSSL = useSSL;
+	}
     public int getEventCounter() { return eventCounter; }
     public int getEventsDroppedInQueueing() { return eventsDroppedInQueueing; }
     public int getEventsDroppedInPush() { return eventsDroppedInPush; }
@@ -354,6 +360,10 @@ public class RedisAppender extends UnsynchronizedAppenderBase<ILoggingEvent> imp
     public int getBatchPurges() { return batchPurges; }
     public int getEventsPushed() { return eventsPushed; }
     public int getEventQueueSize() { return events.size(); }
+    public boolean isUseSSL() {
+		return useSSL;
+	}
+
 
     private void registerMBean() {
         Class me = this.getClass();

@@ -1,29 +1,48 @@
 <configuration>
-  <appender name="TEST" class="com.hardis.logback.FailoverRedisAppender">
-    <source>test-application</source>   
-    <endpoints>localhost:6379,localhost:6565</endpoints>
-    <!-- <host>localhost</host>
-    <port>6565</port> -->
-    <key>key1</key>
-	<layout class="net.logstash.logback.layout.LogstashLayout"></layout>    
-    <alwaysBatch>true</alwaysBatch>
-  	<registerMBean>false</registerMBean>  
-  	<queueSize>5000</queueSize>
-  	<flushInterval>500</flushInterval>
-  	<batchSize>100</batchSize>
-  </appender>
-  
-  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-    <encoder>
-      <pattern>%logger{15} - %message%n%xException{5}</pattern>
-    </encoder>
-  </appender>
-                  
-  <logger name="application" level="DEBUG" />
+	<appender name="TEST"
+		class="com.hardis.logback.FailoverRedisAppender">
+		<source>test-application</source>
+		<endpoints>tpk31.hardis.fr:6379</endpoints>
+		<password>changeMe</password>
+		<key>tutuwms</key>
 
-  <root level="DEBUG">
-    <appender-ref ref="STDOUT" />
-    <appender-ref ref="TEST" />
-  </root>
+		<alwaysBatch>false</alwaysBatch>
+		<registerMBean>false</registerMBean>
+		<queueSize>5000</queueSize>
+		<flushInterval>500</flushInterval>
+		<batchSize>100</batchSize>
+		<useSSL>false</useSSL>
+		<layout class="net.logstash.logback.layout.LogstashLayout">
+			<includeCallerData>true</includeCallerData>
+			<customFields>{"appname":"myWebservice","role":"ejm"}
+			</customFields>
+			<fieldNames class="net.logstash.logback.fieldnames.ShortenedFieldNames">
+				<mdc>mdc</mdc>
+			</fieldNames>
+		</layout>
+
+		<!-- <encoder class="net.logstash.logback.encoder.LogstashEncoder"> <includeCallerData>true</includeCallerData> 
+			<customFields>{"appname":"myWebservice","roles":["customerorder","auth"]} 
+			</customFields> </encoder> -->
+	</appender>
+ 
+	<appender name="STDOUT"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="net.logstash.logback.encoder.LogstashEncoder">
+			<includeCallerData>true</includeCallerData>
+			<customFields>{"appname":"myWebservice","roles":["customerorder","auth"]}
+			</customFields>
+			 <fieldNames class="net.logstash.logback.fieldnames.ShortenedFieldNames"/>
+		</encoder>
+
+	</appender>
+
+	<logger name="application" level="INFO" />
+	<logger name="com.hardis.logback.RedisAppender" level="INFO" />
+	  
+	<root level="DEBUG">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="TEST" />
+	</root>
 
 </configuration>

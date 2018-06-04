@@ -43,7 +43,7 @@ public class RedisAppenderTest {
 			try {
 				for (long i = 0; i < nbLogs; i++) {					
 					log.debug("that's me " + i);
-					Thread.sleep(100);
+					Thread.sleep(1);
 				}
 			} catch (InterruptedException e) {
 				log.debug(e.getMessage());
@@ -77,10 +77,13 @@ public class RedisAppenderTest {
 		JedisPool pool = null;
 		Jedis jedis = null;
 		try {
-			pool = new JedisPool("localhost");
+			pool = new JedisPool("redis://nouser:changeMe@tpk31.hardis.fr:6379");
 			jedis = pool.getResource();
 			jedis.del(key);
-		} finally {
+		}catch (Exception e) {
+e.printStackTrace();
+		} 
+		finally {
 			if (pool != null){
 				pool.close();	
 			}				
@@ -92,7 +95,7 @@ public class RedisAppenderTest {
 	
 	@Before
 	public void setUp() {		
-		JedisPool pool = new JedisPool("localhost");
+		JedisPool pool = new JedisPool("redis://nouser:changeMe@tpk31.hardis.fr:6379");
 		redis = pool.getResource();
 		// clear the redis list first
 		redis.ltrim(key, 1, 0);
